@@ -57,7 +57,7 @@ def inject_css() -> None:
         }
 
         .block-container {
-            max-width: 1240px;
+            max-width: 1540px;
             padding-top: 1.6rem;
             padding-bottom: 3.5rem;
         }
@@ -332,9 +332,9 @@ def render_cards(links: pd.DataFrame) -> None:
         return
 
     records = links.to_dict("records")
-    for start in range(0, len(records), 4):
-        row_columns = st.columns(4)
-        row_records = records[start : start + 4]
+    for start in range(0, len(records), 5):
+        row_columns = st.columns(5)
+        row_records = records[start : start + 5]
         for index, row in enumerate(row_records):
             title = format_card_title(row["구분"])
             description = escape(str(row.get("설명", "")))
@@ -352,7 +352,7 @@ def render_cards(links: pd.DataFrame) -> None:
                     """,
                     unsafe_allow_html=True,
                 )
-        if start + 4 < len(records):
+        if start + 5 < len(records):
             st.markdown("<div style='height: 1.35rem;'></div>", unsafe_allow_html=True)
 
 
