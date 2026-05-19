@@ -15,12 +15,7 @@ jobs:
     steps:
       - name: Ping Streamlit app
         env:
-          STREAMLIT_APP_URL: ${{ vars.STREAMLIT_APP_URL }}
+          STREAMLIT_APP_URL: "https://dashboardapp-l72rcjuf4t5fc6nfxymjsp.streamlit.app/"
         run: |
-          if [ -z "${STREAMLIT_APP_URL}" ]; then
-            echo "STREAMLIT_APP_URL repository variable is not set. Set it to your deployed Streamlit app URL."
-            exit 0
-          fi
-
           echo "Pinging ${STREAMLIT_APP_URL}"
           curl --fail --silent --show-error --location --retry 3 --retry-delay 10 --max-time 60 "${STREAMLIT_APP_URL}" > /dev/null
