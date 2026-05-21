@@ -2,7 +2,7 @@ name: Keep Streamlit Awake
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,5 +17,11 @@ jobs:
         env:
           STREAMLIT_APP_URL: "https://dashboardapp-l72rcjuf4t5fc6nfxymjsp.streamlit.app/"
         run: |
-          echo "Pinging ${STREAMLIT_APP_URL}"
-          curl --fail --silent --show-error --location --retry 3 --retry-delay 10 --max-time 60 "${STREAMLIT_APP_URL}" > /dev/null
+          echo "Warm-up ping: ${STREAMLIT_APP_URL}"
+          curl --fail --silent --show-error --location --retry 5 --retry-delay 10 --max-time 90 "${STREAMLIT_APP_URL}" > /dev/null
+
+          echo "Waiting for Streamlit to finish waking up"
+          sleep 45
+
+          echo "Verification ping: ${STREAMLIT_APP_URL}"
+          curl --fail --silent --show-error --location --retry 5 --retry-delay 10 --max-time 90 "${STREAMLIT_APP_URL}" > /dev/null
